@@ -8,9 +8,9 @@ connect();
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-    const { username, password } = await req.json();
+    const { email, password } = await req.json();
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
 
     if (!user) {
       return NextResponse.json(
