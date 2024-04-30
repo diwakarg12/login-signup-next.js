@@ -26,11 +26,11 @@ const SignupPage = () => {
             setLoading(true);
             const response = await axios.post('/api/users/signup', user);
 
-            console.log("signup success", response.data);
+            // console.log("signup success", response.data);
             router.push('/login')
 
         } catch (error: any) {
-            console.log('Signup failed');
+            // console.log('Signup failed');
             toast.error(error.message);
         }
     }
@@ -79,10 +79,10 @@ const SignupPage = () => {
                     onChange={(e) => { setUser({ ...user, password: e.target.value }) }}
                 />
 
-                <button id="button" name="button" type="submit" className="flex justify-center items-center py-3 w-96 bg-gray-800 text-gray-100 outline-none outline-offset-0 border-none cursor-pointer transition-all duration-400 hover:bg-gray-100 hover:text-orange-500" onClick={onSignup}>
+                <button id="button" name="button" type="submit" {...buttonDisabled ? { disabled: true } : ''} className="flex justify-center items-center py-3 w-96 bg-gray-800 text-gray-100 outline-none outline-offset-0 border-none cursor-pointer transition-all duration-400 hover:bg-gray-100 hover:text-orange-500" onClick={onSignup}>
                     <p className="font-medium text-xl transition-all duration-300">{buttonDisabled ? "Loading..." : "Signup"}</p>
                 </button>
-                <p className='text-end font-mono '>Already have an account ? <Link href="/login" className='text-blue-500 hover:underline '>login here</Link></p>
+                <p className='text-end font-mono mt-2'>Already have an account ? <Link href="/login" className='text-blue-500 hover:underline '>login here</Link></p>
             </form>
 
         </div>

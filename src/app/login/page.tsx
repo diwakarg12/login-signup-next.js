@@ -30,12 +30,14 @@ const LoginPage = () => {
       e.preventDefault();
       setLoading(true);
       const response = await axios.post('/api/users/login', login);
-      console.log(response);
+      // console.log(response);
       toast.success(response.data.message);
+      setLoading(false);
       router.push('/profile')
 
+
     } catch (error: any) {
-      console.log("Error in sending request", error);
+      // console.log("Error in sending request", error);
       toast.error(error.message)
     }
 
@@ -65,10 +67,10 @@ const LoginPage = () => {
         onChange={(e) => { setLogin({ ...login, password: e.target.value }) }}
       />
 
-      <button id="button" name="button" type="submit" className="flex justify-center items-center py-3 w-96 bg-gray-800 text-gray-100 outline-none outline-offset-0 border-none cursor-pointer transition-all duration-400 hover:bg-gray-100 hover:text-orange-500" onClick={onLogin}>
+      <button id="button" name="button" type="submit" {...buttonDisabled ? { disabled: true } : ''} className="flex justify-center items-center py-3 w-96 bg-gray-800 text-gray-100 outline-none outline-offset-0 border-none cursor-pointer transition-all duration-400 hover:bg-gray-100 hover:text-orange-500" onClick={onLogin}>
         <p className="font-medium text-xl transition-all duration-300">{buttonDisabled ? "Loading..." : "Login"}</p>
       </button>
-      <p className='text-end font-mono '>new user ? <Link href="/signup" className='text-blue-500 hover:underline '>register here</Link></p>
+      <p className='text-end font-mono ml-36 mt-2 '>new user ? <Link href="/signup" className='text-blue-500 hover:underline '>register here</Link></p>
     </div>
   )
 }

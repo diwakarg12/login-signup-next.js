@@ -20,24 +20,30 @@ const VerifyEmail = () => {
             setLoading(true);
             const response = await axios.post('/api/users/verifyemail', { token });
             if (response.data.success) {
-                console.log(response);
+                // console.log(response);
                 toast.success('Verified');
                 setVerified(true);
                 setError(false);
+                setLoading(false);
             } else {
-                console.log(response);
+                // console.log(response);
                 toast.error(response.data.message);
                 setVerified(false);
                 setError(true);
             }
 
         } catch (error: any) {
-            console.log("Failed to verify Email", error.message);
+            // console.log("Failed to verify Email", error.message);
             toast.error(error.message)
             setError(true);
             setVerified(false);
         }
     }
+
+    setTimeout(() => {
+        setLoading(false);
+    }, 2000)
+
     useEffect(() => {
         setError(false)
         const urlToken = searchParams.get('token');

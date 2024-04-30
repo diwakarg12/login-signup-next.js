@@ -21,7 +21,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     if (user.isVerified === false) {
       return NextResponse.json(
-        { error: 'Please verify your email before logging in' },
+        { error: 'Please verify your email before logging in', success: false },
         { status: 400 }
       );
     }
@@ -52,7 +52,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     });
 
     return response;
-    
   } catch (error: any) {
     return NextResponse.json(
       {
