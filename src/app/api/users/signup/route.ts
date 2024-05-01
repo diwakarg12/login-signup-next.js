@@ -9,13 +9,15 @@ connect();
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const reqBody = await req.json();
-    const { username, email, password } = reqBody;
+    const { username, phone, email, password, city, state } = reqBody;
 
     console.log(reqBody);
 
     const user = await User.findOne({ email });
 
     if (user) {
+      console.log(user);
+
       return NextResponse.json(
         { error: 'User Already Exist' },
         { status: 400 }
@@ -27,8 +29,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const newUser = new User({
       username,
+      phone,
       email,
       password: hashPassword,
+      city,
+      state,
     });
 
     const savedUser = await newUser.save();
@@ -47,6 +52,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
       { status: 200 }
     );
   } catch (error: any) {
+    console.log('Error in catch block', error.message);
+
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

@@ -1,7 +1,7 @@
 import { connect } from '@/dbConfig/dbConfig';
 import User from '@/models/userModel';
 import { NextResponse, NextRequest } from 'next/server';
-import bcryptjs, { compareSync } from 'bcryptjs';
+import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 connect();
@@ -13,6 +13,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const user = await User.findOne({ email });
 
     if (!user) {
+      console.log("User doesn't exist");
+
       return NextResponse.json(
         { error: 'User with the given username does not exist' },
         { status: 400 }
@@ -20,6 +22,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
 
     if (user.isVerified === false) {
+      console.log('Please verify your email before logging in');
+
       return NextResponse.json(
         { error: 'Please verify your email before logging in', success: false },
         { status: 400 }
@@ -29,6 +33,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const isValidPassword = await bcryptjs.compare(password, user.password);
 
     if (!isValidPassword) {
+      console.log('Wrong Password');
+
       return NextResponse.json({ error: 'Wrong Password' }, { status: 400 });
     }
 
