@@ -9,10 +9,11 @@ import Link from 'next/link';
 const VerifyEmail = () => {
 
     return (
-        <VerifyEmailWrapper />
+        <Suspense fallback={<Loader />}>
+            <VerifyEmailWrapper />
+        </Suspense>
     )
 };
-
 
 const VerifyEmailWrapper = () => {
     const [loading, setLoading] = useState(false);
@@ -28,20 +29,17 @@ const VerifyEmailWrapper = () => {
             setLoading(true);
             const response = await axios.post('/api/users/verifyemail', { token });
             if (response.data.success) {
-                // console.log(response);
                 toast.success('Verified');
                 setVerified(true);
                 setError(false);
                 setLoading(false);
             } else {
-                // console.log(response);
                 toast.error(response.data.message);
                 setVerified(false);
                 setError(true);
             }
 
         } catch (error: any) {
-            // console.log("Failed to verify Email", error.message);
             toast.error(error.message)
             setError(true);
             setVerified(false);
@@ -84,4 +82,4 @@ const VerifyEmailWrapper = () => {
     )
 }
 
-export default VerifyEmail
+export default VerifyEmail;
