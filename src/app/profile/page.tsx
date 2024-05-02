@@ -46,9 +46,10 @@ const ProfilePage = () => {
         try {
             setLoading(true);
             await axios.get('/api/users/logout');
-            setLoading(false);
             toast.success("Logout successfully");
+            console.log("Logout successfully");
             router.push('/login');
+            setLoading(false);
         } catch (error: any) {
             // console.log(error.message);
             toast.error(error.message);
